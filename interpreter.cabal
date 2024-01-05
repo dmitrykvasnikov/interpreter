@@ -68,7 +68,7 @@ library
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.15.1.0
+    build-depends:    base ^>=4.19.0.0
 
     -- Directories containing source files.
     hs-source-dirs:   lib
@@ -91,7 +91,7 @@ executable interpreter
 
     -- Other library packages from which modules are imported.
     build-depends:
-        base ^>=4.15.1.0,
+        base ^>=4.19.0.0,
         interpreter
 
     -- Directories containing source files.
