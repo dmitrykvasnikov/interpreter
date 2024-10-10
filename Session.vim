@@ -14,10 +14,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +22 lib/Repl.hs
+badd +23 lib/Repl.hs
 badd +4 app/Main.hs
-badd +32 lib/Lexer.hs
-badd +47 lib/Types.hs
+badd +41 lib/Lexer.hs
+badd +29 lib/Types.hs
 badd +3 notes
 badd +71 interpreter.cabal
 argglobal
@@ -33,12 +33,12 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 9 - ((8 * winheight(0) + 16) / 33)
+let s:l = 19 - ((16 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 9
-normal! 019|
+keepjumps 19
+normal! 089|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -51,7 +51,6 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
-nohlsearch
 let g:this_session = v:this_session
 let g:this_obsession = v:this_session
 doautoall SessionLoadPost
