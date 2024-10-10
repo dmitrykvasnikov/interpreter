@@ -16,14 +16,15 @@ else
 endif
 badd +22 lib/Repl.hs
 badd +4 app/Main.hs
-badd +41 lib/Lexer.hs
-badd +12 lib/Types.hs
-badd +0 notes
+badd +32 lib/Lexer.hs
+badd +47 lib/Types.hs
+badd +3 notes
+badd +71 interpreter.cabal
 argglobal
 %argdel
-edit notes
+edit lib/Lexer.hs
 argglobal
-balt lib/Lexer.hs
+balt lib/Types.hs
 setlocal fdm=marker
 setlocal fde=0
 setlocal fmr=/**,**/
@@ -31,13 +32,13 @@ setlocal fdi=#
 setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
-setlocal nofen
-let s:l = 3 - ((2 * winheight(0) + 16) / 33)
+setlocal fen
+let s:l = 9 - ((8 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 3
-normal! 030|
+keepjumps 9
+normal! 019|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -50,6 +51,7 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
+nohlsearch
 let g:this_session = v:this_session
 let g:this_obsession = v:this_session
 doautoall SessionLoadPost
