@@ -7,7 +7,7 @@ import qualified Data.Text                      as T
 import qualified Data.Vector                    as V
 import           Types
 
-type Lexer a = RWS Source Diagnostics Program a
+type Lexer a = RWST Source Diagnostics Program IO a
 
 data LexerBranch = Num | Special | Err | Eof | WS
 

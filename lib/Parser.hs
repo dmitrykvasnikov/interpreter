@@ -7,7 +7,7 @@ import           Debug.Trace
 import qualified Lexer                          as L
 import           Types
 
-type Parser a = RWS Source Diagnostics Program a
+type Parser a = RWST Source Diagnostics Program IO a
 
 peek :: Int -> Parser SyntaxToken
 peek offset = do
@@ -39,8 +39,8 @@ match :: SyntaxKind -> Parser SyntaxToken
 match sk = do
   c <- current
   case stkind c == sk of
-    True  -> next >> return c
-    False -> return $ SyntaxToken sk (stpos c) "" Null
+    True -> next >> return c
+    False -> tell [Message Error $ "Parser error, position " <> (show . stpos $ c) <> ", expected kind " <> show sk <> ", got " <> (show . stkind $ c)] >> (return $ SyntaxToken sk (stpos c) "" Null)
 
 parse :: Parser Expression
 parse = do

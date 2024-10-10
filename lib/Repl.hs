@@ -10,35 +10,27 @@ import qualified Lexer                          as L
 import           Parser                         (Parser)
 import qualified Parser                         as P
 import           Print
+import           System.Console.Pretty
 import           Types
 
 initProgram :: Program
 initProgram = Program 1 V.empty 1
 
 repl :: IO ()
-repl = do
-  putStr ">>> "
-  i <- T.pack <$> getLine
-  runProgram i
-  repl
+repl = fst <$> evalRWST repl1 (T.pack "") initProgram
 
-repl1 :: RWST Source Diagnostics Program IO Expression
+repl1 :: RWST Source Diagnostics Program IO ()
 repl1 = do
   put initProgram
-  i <- liftIO getLine
-  return undefined
+  liftIO $ putStr ">>> "
+  liftIO getLine >>= \case
+    ":exit" -> return ()
+    i -> do
+      (e, m) <- listen . local (const (T.pack i)) $ (L.tokenize >> P.parse)
+      liftIO . putStrLn . show $ e
+      liftIO . prettyPrint "" $ [e]
+      when (not . null $ m) ((liftIO . putStrLn $ color Cyan "Diagnostics:") >> (mapM_ (liftIO . putStrLn . show) m))
+      repl1
 
-runProgram :: Source -> IO ()
-runProgram i = do
-  --   let (tokens, _, msgs) = runRWS listOfTokens i initProgram
-  --   mapM_ (putStrLn . show) tokens
-  let (expr, _, msgs) = runRWS expression i initProgram
-  putStrLn . show $ expr
-  prettyPrint "" [expr]
-  when (not . null $ msgs) (putStrLn "Diagnostics :" >> mapM_ (putStrLn . show) msgs)
-
-listOfTokens :: Lexer [SyntaxToken]
-listOfTokens = L.tokenize >> V.toList <$> gets tokens
-
-expression :: Parser Expression
-expression = L.tokenize >> P.parse
+-- listOfTokens :: Lexer [SyntaxToken]
+-- listOfTokens = L.tokenize >> V.toList <$> gets tokens
