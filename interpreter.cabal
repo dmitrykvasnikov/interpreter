@@ -60,7 +60,9 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  Lexer
+                   ,  Parser
                    ,  Types
+                   ,  Print
                    ,  Repl
 
     -- Modules included in this library but not exported.
@@ -78,6 +80,7 @@ library
                  ,    pretty-terminal
                  ,    directory
                  ,    text
+                 ,    vector
 
     -- Directories containing source files.
     hs-source-dirs:   lib

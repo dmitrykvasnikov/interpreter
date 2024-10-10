@@ -1,6 +1,7 @@
 module Types where
 
 import           Data.Text             (Text)
+import           Data.Vector           (Vector)
 import           System.Console.Pretty
 
 data SyntaxKind = NumberToken | PlusToken | MinusToken | DivisionToken | MultToken | OpenParenToken | CloseParenToken | EofToken | ErrorToken | WhiteSpace deriving
@@ -10,6 +11,7 @@ data SyntaxKind = NumberToken | PlusToken | MinusToken | DivisionToken | MultTok
 
 data Value = NumberValue Int
            | Null
+  deriving (Eq)
 
 instance Show Value where
   show (NumberValue num) = "INTEGER : " <> show num
@@ -24,6 +26,17 @@ data SyntaxToken = SyntaxToken { stkind :: SyntaxKind
 instance Show SyntaxToken where
   show st@(SyntaxToken ErrorToken _ _ _) = (color Red $ show (stkind st) <> " " <> (strep st))
   show st = show (stkind st) <> " '" <> (strep st) <> "' | value : " <> show (stval st)
+
+data Expression = NumberExpression { expst :: SyntaxToken
+                                   }
+                | BinaryExpression { expst :: SyntaxToken
+                                   , l     :: Expression
+                                   , r     :: Expression
+                                   }
+
+instance Show Expression where
+  show (NumberExpression st)    = strep st
+  show (BinaryExpression o l r) = show l <> strep o <> show r
 
 data MessageKind = Warning | Error
 
@@ -43,7 +56,7 @@ type Position = Int
 
 type Source = Text
 
-data Program = Program { lexerP  :: Position
-                       , tokens  :: [SyntaxToken]
-                       , parserP :: Position
+data Program = Program { lexerPos  :: Position
+                       , tokens    :: Vector SyntaxToken
+                       , parserPos :: Position
                        }

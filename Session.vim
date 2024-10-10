@@ -14,17 +14,19 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +23 lib/Repl.hs
+badd +29 lib/Repl.hs
 badd +4 app/Main.hs
-badd +41 lib/Lexer.hs
-badd +29 lib/Types.hs
+badd +10 lib/Lexer.hs
+badd +13 lib/Types.hs
 badd +3 notes
-badd +71 interpreter.cabal
+badd +65 interpreter.cabal
+badd +19 lib/Parser.hs
+badd +3 lib/Print.hs
 argglobal
 %argdel
-edit lib/Lexer.hs
+edit lib/Repl.hs
 argglobal
-balt lib/Types.hs
+balt lib/Lexer.hs
 setlocal fdm=marker
 setlocal fde=0
 setlocal fmr=/**,**/
@@ -33,12 +35,13 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 19 - ((16 * winheight(0) + 16) / 33)
+let s:l = 1 - ((0 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 19
-normal! 089|
+keepjumps 1
+normal! 0
+lcd ~/code/haskell/interpreter
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
