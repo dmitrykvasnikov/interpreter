@@ -1,0 +1,4 @@
+Expression = NumberExpression | BinaryExpression SyntaxKind
+
+AstNode = Node Expression [Expression]
+
