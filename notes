@@ -1,4 +1,120 @@
-Expression = NumberExpression | BinaryExpression SyntaxKind
+https://en.wikipedia.org/wiki/Lexical_analysis
+wiki lexer
+
+Data structure
+  compoundStm - list of staments (that's basically what our program is)
+  stm - statement
+  epxr - Expression
+  exprList - list of expressions
+  id - identifier
+  num - numeric Literal
+
+
+State :
+  Source :: Text
+  Positions
+  Settings
+
+?? Parser ::
+  CurToken -> get from Lexer
+
+whitespaces \n \r \t ' '
+
+add a source length into input structure
 
 AstNode = Node Expression [Expression]
 
+SyntaxKind contains tokens and expressions
+
+Token ::
+  kind :: SyntaxKind
+  value :: Value
+  positon :: (Line, Col) - use lines for getting part of input with error
+
+SyntaxKind ::
+  // var tokens
+  LiteralToken
+  // operation tokens
+  PlusToken
+  MinusToken
+  // identifier
+  IdentifierToken
+  // keywords tokens
+  ReturnToken
+  LetToken
+  // separators
+  SemicolonToken
+  OpenParenToken
+CloseParenToken
+  // whitespace
+  WhiteSpaceToken
+  NewLineToken
+  // expressions ????
+  FunctionDefinition
+  FuncitonCall
+  // Statements
+  AddignStatement
+  ReturnStatement
+
+Value ::
+  BoolValue
+  IntValue
+  StringValue
+  SyntaxValue - for operands, keywords etc ...
+
+Expression ::
+  IdentifierExpression
+  LiteralExpression ::
+    Kind????
+    Type
+    Postion
+    Value
+  BinaryOpExpression
+    Kind ???
+    Type
+    Position
+    OpCode String
+    Expression
+    Expression
+  UnaryExpression
+    Kind
+    Type
+    Position
+    OpCode String
+    Expression
+  FunctionDefinition
+    Kind
+    Type
+    Expression
+    [Expression]
+    Statement -> should be resolved to compound statement
+  FunctionCall
+    Kind
+    Type
+    Expression -> should be resolved to function kind or identifier kind
+    [Expression]
+
+Statements
+  LetStm
+    Kind
+  ReturnStatement
+    Kind
+
+kind and type a sort of dublicate each other
+
+ExpressionType :: Internal InternalType | Custom String
+
+InternaLType :: UNDEF | INT | STR | BOOL | [InternalType] - last for functions
+
+BindingsPower
+	default (no power)
+	comma
+	assigment
+	logical
+	relational
+	additive
+	multiplicative
+	unary
+	call
+	member
+	primary (like literals???)

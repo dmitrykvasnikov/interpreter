@@ -14,19 +14,20 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +32 lib/Repl.hs
-badd +6 app/Main.hs
-badd +64 lib/Lexer.hs
-badd +25 lib/Types.hs
-badd +3 notes
-badd +65 interpreter.cabal
-badd +43 lib/Parser.hs
-badd +3 lib/Print.hs
+badd +86 interpreter.cabal
+badd +4 app/Main.hs
+badd +4 lib/Types/Lexer.hs
+badd +14 lib/Types/Common.hs
+badd +3 lib/Types/Parser.hs
+badd +18 lib/Types/Repl.hs
+badd +8 lib/Lexer/Lexer.hs
+badd +5 lib/Utils.hs
+badd +5 lib/Lexer/Patterns.hs
 argglobal
 %argdel
-edit lib/Parser.hs
+edit lib/Lexer/Patterns.hs
 argglobal
-balt lib/Types.hs
+balt lib/Lexer/Lexer.hs
 setlocal fdm=marker
 setlocal fde=0
 setlocal fmr=/**,**/
@@ -35,12 +36,12 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 16 - ((15 * winheight(0) + 16) / 33)
+let s:l = 23 - ((22 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 16
-normal! 026|
+keepjumps 23
+normal! 042|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
@@ -53,6 +54,7 @@ if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
+nohlsearch
 let g:this_session = v:this_session
 let g:this_obsession = v:this_session
 doautoall SessionLoadPost

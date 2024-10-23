@@ -59,11 +59,13 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  Lexer
-                   ,  Parser
-                   ,  Types
-                   ,  Print
-                   ,  Repl
+    exposed-modules: Types.Common
+                   , Types.Lexer
+                   , Types.Parser
+                   , Types.Repl
+                   , Lexer.Lexer
+                   , Lexer.Patterns
+                   , Utils
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -81,6 +83,8 @@ library
                  ,    directory
                  ,    text
                  ,    vector
+                 -- ,    regex-compat
+                 ,    regex-tdfa
 
     -- Directories containing source files.
     hs-source-dirs:   lib
