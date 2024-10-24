@@ -17,7 +17,9 @@ instance Show Value where
   show (SyntaxValue s) = s
 
 data TokenKind -- tokens
-               = LiteralToken
+               = IntLiteralToken
+               | StringLiteralToken
+               | BoolLiteralToken
                | IdentifierToken
                -- operation tokens
                | PlusToken
@@ -27,12 +29,14 @@ data TokenKind -- tokens
                | PlusPlusToken
                | MinusMinusToken
                -- keywords Token
-               | AssignToken
+               | LetToken
                | ReturnToken
                | IfToken
                | ThenToken
                | ElseToken
+               | FunctionToken
                -- separators
+               | AssignToken
                | WhiteSpaceToken
                | LParenToken
                | RParenToken
@@ -41,9 +45,19 @@ data TokenKind -- tokens
                | ColonToken
                | SemicolonToken
                | CommaToken
+               | QuestionToken
+               | ExclamationToken
+               | AndToken
+               | OrToken
                | NewLineToken
                | LCurlyToken
                | RCurlyToken
+               | EqualToken
+               | NotEqualToken
+               | GRToken
+               | LSToken
+               | GREToken
+               | LSEToken
                | EOFToken
   deriving (Eq, Ord, Show)
 
